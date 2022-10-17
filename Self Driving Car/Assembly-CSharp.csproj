@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\RaycastSensors.cs" />
+    <Compile Include="Assets\Scripts\Velocity.cs" />
     <Compile Include="Assets\Scripts\NormalizeDistances.cs" />
   </ItemGroup>
   <ItemGroup>

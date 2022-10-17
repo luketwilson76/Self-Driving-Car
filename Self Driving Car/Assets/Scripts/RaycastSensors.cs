@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RaycastSensors : MonoBehaviour
 {
     private GameObject lastHit;
     private Vector3 collision = Vector3.zero;
-    [HideInInspector] float 
+    [HideInInspector] public double distanceLength;
 
     // Update is called once per frame
     void Update()
@@ -18,7 +19,7 @@ public class RaycastSensors : MonoBehaviour
             lastHit = hit.transform.gameObject;
             collision = hit.point;
         }
-        distance()
+        distance(ray.origin, collision);
     }
 
     private void OnDrawGizmos()
@@ -26,5 +27,12 @@ public class RaycastSensors : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(collision, new Vector3(1, 1, 1));
     }
-
+    private void distance(Vector3 self, Vector3 collision)
+    {
+        float deltaX = collision.x - self.x;
+        float deltaY = collision.y - self.y;
+        float deltaZ = collision.z - self.z;
+        double distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+        distanceLength = distance;
+    }
 }
