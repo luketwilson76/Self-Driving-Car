@@ -20,8 +20,13 @@ MonoBehaviour:
     height: 989
   m_ShowMode: 4
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_Title: Game
   m_RootView: {fileID: 6}
+=======
+  m_Title: Console
+  m_RootView: {fileID: 3}
+>>>>>>> Stashed changes
 =======
   m_Title: Console
   m_RootView: {fileID: 3}
@@ -49,10 +54,16 @@ MonoBehaviour:
     width: 1920
     height: 939
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
   controlID: 95
+=======
+  m_MinSize: {x: 100, y: 123}
+  m_MaxSize: {x: 4000, y: 4023}
+  m_ActualView: {fileID: 6}
+>>>>>>> Stashed changes
 =======
   m_MinSize: {x: 100, y: 123}
   m_MaxSize: {x: 4000, y: 4023}
@@ -67,6 +78,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -149,6 +161,8 @@ MonoBehaviour:
   m_EditorHideFlags: 1
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   m_Script: {fileID: 12008, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -211,6 +225,7 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 --- !u!114 &9
 MonoBehaviour:
@@ -929,6 +944,9 @@ MonoBehaviour:
 =======
 --- !u!114 &6
 >>>>>>> Stashed changes
+=======
+--- !u!114 &6
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -950,9 +968,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     y: 629
     width: 1466
     height: 362
+=======
+    y: 73
+    width: 1920
+    height: 920
+>>>>>>> Stashed changes
 =======
     y: 73
     width: 1920
