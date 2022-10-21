@@ -7,7 +7,7 @@ public class RaycastSensors : MonoBehaviour
 {
     private GameObject lastHit;
     private Vector3 collision = Vector3.zero;
-    [HideInInspector] public double distanceLength;
+    [HideInInspector] public float distanceLength;
 
     // Update is called once per frame
     void Update()
@@ -33,6 +33,6 @@ public class RaycastSensors : MonoBehaviour
         float deltaY = collision.y - self.y;
         float deltaZ = collision.z - self.z;
         double distance = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-        distanceLength = distance;
+        distanceLength = ((float)distance);
     }
 }

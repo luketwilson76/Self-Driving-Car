@@ -5,19 +5,31 @@ using UnityEngine;
 
 public class ProcessingElement : MonoBehaviour
 {
-    [SerializeField]
-    void Start()
-    {
-        Debug.Log("test");
-        WeightFile weightFile = new WeightFile();
-        weightFile.test = 1;
+    [SerializeField] private TextAsset weights;
+    //[SerializeField] private float[] patterns;
+    private int numWeights;
 
-        string json = JsonUtility.ToJson(weightFile);
-        File.WriteAllText(Application.dataPath + "/Json/weights.json", json);
-    }
-    private class WeightFile
+    private void Start()
     {
-        public int test;
+        Debug.Log(weights);
+        //patterns = gameObject.GetComponent<NormalizeDistances>().normalizedLengths;
     }
-    
+
+    /*float sigmoid(float input)
+    {
+        return 1/(1+Mathf.Exp(-input));
+    }
+
+    float generate_output(float[] pattern)
+    {
+        float output = 0;
+        for (int i = 0; i < pattern.Length; i++)
+        {
+            
+        }
+        output = sigmoid(output);
+        return output;
+    }*/
 }
+
+
