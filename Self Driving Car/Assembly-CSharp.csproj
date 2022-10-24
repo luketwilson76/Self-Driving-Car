@@ -56,11 +56,7 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\RaycastSensors.cs" />
-    <Compile Include="Assets\Scripts\ProcessingElement.cs" />
-    <Compile Include="Assets\Scripts\Velocity.cs" />
-    <Compile Include="Assets\Scripts\NormalizeDistances.cs" />
-    <Compile Include="Assets\Scripts\TestingJSON.cs" />
+    <Compile Include="Assets\CarController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
