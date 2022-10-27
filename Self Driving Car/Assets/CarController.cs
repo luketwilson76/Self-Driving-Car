@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(NeuralNetwork))]
 public class CarController : MonoBehaviour
 {
     [Header("Normalization Values")]
@@ -12,10 +13,14 @@ public class CarController : MonoBehaviour
     //sets inital starting point
     private Vector3 startPosition, startRotation;
 
+
+    private NeuralNetwork network;
+
+
     [Range(-1f, 1f)]
     public float acceleration, turningValue;
 
-    [HideInInspector]public float timeSinceStart = 0f;
+    [HideInInspector] public float timeSinceStart = 0f;
 
     [HideInInspector] public float overallFitness;
 
@@ -28,7 +33,10 @@ public class CarController : MonoBehaviour
     [SerializeField] private float fitnessLowReset = 40f;
     [SerializeField] private float fitnessHighReset = 1000f;
 
-    //tell us the 
+    [Header("Network Options")]
+    public int layers = 1;
+    public int neurons = 10;
+    
     private Vector3 lastPosition;
     private float totalDistanceTraveled;
     private float avgSpeed;
@@ -41,6 +49,9 @@ public class CarController : MonoBehaviour
         InputSensor();
         lastPosition = transform.position;
         //ANN code here
+
+        (acceleration, turningValue) = network.RunNetwork(aSensor, bSensor, cSensor);
+
         MoveCar(acceleration, turningValue);
         timeSinceStart += Time.deltaTime;
         CalculateFitness();
@@ -55,6 +66,12 @@ public class CarController : MonoBehaviour
         //sets inital starting point
         startPosition = transform.position;
         startRotation = transform.eulerAngles;
+        network = GetComponent<NeuralNetwork>();
+    }
+
+    public void ResetWithNetwork(NeuralNetwork neuralNetwork)
+    {
+        network = neuralNetwork;
     }
 
     public void Reset()
@@ -69,7 +86,13 @@ public class CarController : MonoBehaviour
 
      private void OnCollisionEnter(Collision collision)
     {
-        Reset();
+
+        Death();
+    }
+
+    private void Death()
+    {
+        GameObject.FindObjectOfType<GeneicManager>().Death(overallFitness, network);
     }
 
     private void CalculateFitness()
@@ -82,13 +105,13 @@ public class CarController : MonoBehaviour
         //if car is too slow or not moving, reset simulation
         if (timeSinceStart > timeReset && overallFitness < fitnessLowReset)
         {
-            Reset();
+            Death();
         }
 
         if (overallFitness >= fitnessHighReset)
         {
-            //Saves network to a JSON
-            Reset();
+            //Saves network to a JSON!!!!!!!!!!!!!!!!!!!!!!
+            Death();
         }
     }
 
