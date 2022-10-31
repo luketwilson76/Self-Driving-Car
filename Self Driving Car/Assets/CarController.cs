@@ -1,163 +1,161 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(NeuralNetwork))]
 public class CarController : MonoBehaviour
 {
-    [Header("Normalization Values")]
-    [SerializeField] private float maxDistance;
+    [Header("Normalize Data Values")]
+    [SerializeField] private float maxSensorDistance;
 
-    [Header("Magnitudes of Acceleration")]
-    [SerializeField] public float Vertical = 11.4f;
-    [SerializeField] public float Horizontal = 0.02f;
+    [Header("Genetic Manager")]
+    [SerializeField] private GameObject geneticManager;
 
-    //sets inital starting point
-    private Vector3 startPosition, startRotation;
-
-
+    private Vector3 startPos, startRotation;
     private NeuralNetwork network;
 
-
+    //acceleration and turning values
     [Range(-1f, 1f)]
-    public float acceleration, turningValue;
+    [SerializeField] private float acceleration, turning;
 
-    [HideInInspector] public float timeSinceStart = 0f;
+    //records time of car while alive
+    [HideInInspector] public float timer = 0f;
 
-    [HideInInspector] public float overallFitness;
+    //variables used to calculate fitness
+    [Header("Fitness Function Variables")]
+    [SerializeField] private float maxFitness;
+    [SerializeField] private float minFitness;
+    [SerializeField] private float cutOffTime;
+    [SerializeField] private float distanceMultiplier = 1.4f;
+    [SerializeField] private float speedMultiplier = 0.2f;
+    [SerializeField] private float sensorMultiplier = 0.1f;
 
-    //these two variables tell the fitness function what counts more (the distance a car goes or the speed at which a car goes?)
-    [Header("Fitness Function Factors")]
-    [SerializeField] public float distanceMultiplier = 1.4f;
-    [SerializeField] public float avgSpeedMultiplier = 0.2f;
-    [SerializeField] public float sensorMultiplier = 0.1f;
-    [SerializeField] private float timeReset = 20;
-    [SerializeField] private float fitnessLowReset = 40f;
-    [SerializeField] private float fitnessHighReset = 1000f;
+    private float fitness;
 
-    [Header("Network Options")]
+    //structure of ANN
+    [Header("Network Structure")]
     public int layers = 1;
-    public int neurons = 10;
-    
-    private Vector3 lastPosition;
-    private float totalDistanceTraveled;
+    public int nodes = 10;
+
+    //records last position to calculate distanceMultiplier travelled
+    private Vector3 lastPos;
+    private float totalDis;
     private float avgSpeed;
 
-    //sensors that gives us the inputs for the ANN
-    private float aSensor, bSensor, cSensor;
+    //gather raw data for distanceMultiplier between car and wall
+    private float sensor1, sensor2, sensor3;
+    private Vector3 input;
 
-    private void FixedUpdate()
-    {
-        InputSensor();
-        lastPosition = transform.position;
-        //ANN code here
-
-        (acceleration, turningValue) = network.RunNetwork(aSensor, bSensor, cSensor);
-
-        MoveCar(acceleration, turningValue);
-        timeSinceStart += Time.deltaTime;
-        CalculateFitness();
-
-        //acceleration = 0;
-        //time = 0;
-
-    }
-
+    //when program starts, record start pos of car and grab network script off car
     private void Awake()
     {
-        //sets inital starting point
-        startPosition = transform.position;
+        startPos = transform.position;
         startRotation = transform.eulerAngles;
         network = GetComponent<NeuralNetwork>();
     }
 
-    public void ResetWithNetwork(NeuralNetwork neuralNetwork)
+    //resets the network
+    public void resetANN(NeuralNetwork net)
     {
-        network = neuralNetwork;
+        network = net;
+        Reset();
     }
 
+    //resets all stats of car
     public void Reset()
     {
-        timeSinceStart = 0f;
-        totalDistanceTraveled = 0f;
+        timer = 0f;
+        totalDis = 0f;
         avgSpeed = 0f;
-        overallFitness = 0f;
-        transform.position = startPosition;
+        lastPos = startPos;
+        fitness = 0f;
+        transform.position = startPos;
         transform.eulerAngles = startRotation;
     }
 
-     private void OnCollisionEnter(Collision collision)
+    //when car runs into wall, reset
+    private void OnCollisionEnter(Collision collision)
     {
-
-        Death();
+        die();
     }
 
-    private void Death()
+    //main function
+    private void FixedUpdate()
     {
-        GameObject.FindObjectOfType<GeneicManager>().Death(overallFitness, network);
+        normalizeSensorInputs();
+        lastPos = transform.position;
+        (acceleration, turning) = network.runNetwork(sensor1, sensor2, sensor3);
+        moveCar(acceleration, turning);
+        timer += Time.deltaTime;
+        fitnessCalc();
     }
 
-    private void CalculateFitness()
+    //kills car and moves on to next genome
+    private void die()
     {
-        //find total distance traveled
-        totalDistanceTraveled += Vector3.Distance(transform.position, lastPosition);
-        avgSpeed = totalDistanceTraveled / timeSinceStart;
-        //calculates the fitness for the car using all factors
-        overallFitness = (totalDistanceTraveled * distanceMultiplier) + (avgSpeed * avgSpeedMultiplier) + (((aSensor+bSensor+cSensor)/3)*sensorMultiplier);
-        //if car is too slow or not moving, reset simulation
-        if (timeSinceStart > timeReset && overallFitness < fitnessLowReset)
+        geneticManager.GetComponent<GeneticManager>().exinction(fitness, network);
+    }
+
+    //calculates fitness
+    private void fitnessCalc()
+    {
+        totalDis += Vector3.Distance(transform.position, lastPos);
+        avgSpeed = totalDis / timer;
+        fitness = (totalDis * distanceMultiplier) + (avgSpeed * speedMultiplier) + (((sensor1 + sensor2 + sensor3) / 3) * sensorMultiplier);
+        if (timer > cutOffTime && fitness < minFitness)
         {
-            Death();
+            die();
         }
 
-        if (overallFitness >= fitnessHighReset)
+        if (fitness >= maxFitness)
         {
-            //Saves network to a JSON!!!!!!!!!!!!!!!!!!!!!!
-            Death();
+            die();
         }
+
     }
 
-    private void InputSensor()
+    //gathers raw data from sensors and normalizes it, also draws rays
+    private void normalizeSensorInputs()
     {
-        //sensor looking diagonally right
         Vector3 a = (transform.forward + transform.right);
-        //sensor looking forward
         Vector3 b = (transform.forward);
-        //sensor looking diagonally left
         Vector3 c = (transform.forward - transform.right);
 
         Ray r = new Ray(transform.position, a);
         RaycastHit hit;
 
-        if (Physics.Raycast(r,out hit))
+        if (Physics.Raycast(r, out hit))
         {
-            aSensor = hit.distance / maxDistance;
+            sensor1 = hit.distance / maxSensorDistance;
             Debug.DrawLine(r.origin, hit.point, Color.red);
         }
 
         r.direction = b;
+
         if (Physics.Raycast(r, out hit))
         {
-            bSensor = hit.distance / maxDistance;
+            sensor2 = hit.distance / maxSensorDistance;
             Debug.DrawLine(r.origin, hit.point, Color.red);
         }
 
         r.direction = c;
+
         if (Physics.Raycast(r, out hit))
         {
-            cSensor = hit.distance / maxDistance;
+            sensor3 = hit.distance / maxSensorDistance;
             Debug.DrawLine(r.origin, hit.point, Color.red);
         }
+
     }
 
-    private Vector3 input;
-    //verticalMovement = acceleration, horizontalMovement = rotation
-    public void MoveCar(float verticalMovement, float horizontalMovement)
+    //calculates turning of car
+    public void moveCar(float v, float h)
     {
-        // Lerp or Linear Interpolation, is a mathematical function in Unity that returns a value between two others points
-        input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, verticalMovement * Vertical), Horizontal);
+        input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, v * 11.4f), 0.02f);
         input = transform.TransformDirection(input);
-        //tells us where to turn our car
         transform.position += input;
-        // horizontalMovement * 90 = % of when to turn 90 degrees
-        transform.eulerAngles += new Vector3(0, (horizontalMovement*90)*Horizontal,0);
+
+        transform.eulerAngles += new Vector3(0, (h * 90) * 0.02f, 0);
     }
+
 }
