@@ -6,7 +6,7 @@ This project was made in Unity 2021.3.11f1. This self driving car features three
  The car controller allows the user to manipulate certain parameters for methods that contribute to the structure of the ANN and fitness.
 ###Normalization
 **Max Distance:** input max distance used in the normalization function for sensors that gather information for car
-###Fitness Function
+###Fitness Function###
 **Max Fitness:** when to stop the program when a contingency in fitness is met
 **Min Fitness:** if agent's fitness is tool low so the program can move onto the next agent
 **Cut-off time:** if agent's fitness is not equal to min fitness by cut off time, then move to next agent
