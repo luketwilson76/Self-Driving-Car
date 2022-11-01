@@ -1,5 +1,7 @@
 # Self-Driving-Car
 
+![alt text](https://github.com/luketwilson76/Self-Driving_Car/picture/main/image.jpg?raw=true)
+
 This is a self driving car that uses a gentic algorithm to progressivley train a population of ANNs towards a better fitness. 
 This project was made in Unity 2021.3.11f1. This self driving car features three main C# scripts that run the program.
 
