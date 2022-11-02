@@ -31,9 +31,6 @@ sure to randomize the values of the biases and weights when creating the inital 
 ## Genetic Manager
 The genetic manager allows the user to customize the size of a population for each generation, the mutuation rate, and how crossover will function in each generation's population.
 
-## Plug Ins
-- Math.Net
-- ProBuilder
 ### Pooling Settings
 **Population Size:** How big do you want the population to be for each gen? </br>
 **Mutation Rate:** How much change do you want for each child in their weights and biases? </br>
@@ -42,3 +39,8 @@ The genetic manager allows the user to customize the size of a population for ea
 **Best Agent Selection**: What agents are suitable for crossover? </br> 
 **Worst Agent Selection**: Which agents should we cull from the population? </br>
 **Number to crossover** How many agents should with crossover with the best performing agents (parents)
+
+
+## Plug Ins
+- Math.Net </br>
+- ProBuilder
