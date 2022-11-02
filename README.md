@@ -19,7 +19,7 @@ This project was made in Unity 2021.3.11f1. This self driving car features three
 ### Network Structure
 **Layers:** Number of hidden layers </br>
 **Nodes:** Number of nodes per layer </br>
-note: be careful not to optimize too much
+note: be careful not to overfit too much
 ## Neural Network
 The neural network script creates the structure of the ANN including the layers (input, hidden, output), weights, and biases. The neural network script makes
 sure to randomize the values of the biases and weights when creating the inital population. The neural network script also has activation functions for each node. The neural network has 4 input nodes (3 sensors that collect distances from car to walls, and the speed of the car).
