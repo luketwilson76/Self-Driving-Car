@@ -23,7 +23,7 @@ This project was made in Unity 2021.3.11f1. This self driving car features three
 ### Network Structure
 **Layers:** Number of hidden layers </br>
 **Nodes:** Number of nodes per layer </br>
-*note: be careful not to overfit too much*
+*note: be careful not to overfit when adding more nodes or number of layers*
 
 ## Neural Network
 The neural network script creates the structure of the ANN including the layers (input, hidden, output), weights, and biases. The neural network script makes
