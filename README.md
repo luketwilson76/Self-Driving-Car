@@ -1,6 +1,7 @@
 # Self-Driving-Car
 
 ![Screenshot 2022-11-01 134201](https://user-images.githubusercontent.com/78549037/199303430-7607bf18-4969-400e-b7cf-1b816185a4da.jpg)
+*Figure 1: An ANN is being trained in a population
 
 This is a self driving car that uses a gentic algorithm to progressivley train a population of ANNs towards a better fitness. 
 This project was made in Unity 2021.3.11f1. This self driving car features three main C# scripts that run the program.
@@ -36,9 +37,9 @@ The genetic manager allows the user to customize the size of a population for ea
 **Mutation Rate:** How much change do you want for each child in their weights and biases? </br>
 
 ## Crossover Controls
-**Best Agent Selection**: What agents are suitable for crossover? </br> 
-**Worst Agent Selection**: Which agents should we cull from the population? </br>
-**Number to crossover** How many agents should with crossover with the best performing agents (parents)
+**Best Agent Selection:** What agents are suitable for crossover? </br> 
+**Worst Agent Selection:**: Which agents should we cull from the population? </br>
+**Number to crossover:** How many agents should with crossover with the best performing agents (parents)
 
 
 ## Plug Ins
