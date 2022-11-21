@@ -4,7 +4,7 @@
 *Figure 1: An ANN is being trained in a population*
 
 This is a self driving car that uses a gentic algorithm to progressivley train a population of ANNs towards a better fitness. 
-This project was made in Unity 2021.3.11f1. This self driving car features three main C# scripts that run the program.
+This project was made in Unity 2021.3 This self driving car features three main C# scripts that run the program.
 
 ## Car Controller
  The car controller allows the user to input certain parameters for methods that contribute to the structure of the ANN and fitnesses of these ANNs.
