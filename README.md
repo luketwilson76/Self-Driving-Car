@@ -30,7 +30,7 @@ The neural network script creates the structure of the ANN including the layers 
 sure to randomize the values of the biases and weights when creating the inital population. The neural network script also has activation functions for each node. The neural network has 4 input nodes (3 sensors that collect distances from car to walls, and the speed of the car).
  
 ## Genetic Manager
-The genetic manager allows the user to customize the size of a population for each generation, the mutuation rate, and how crossover will function in each generation's population.
+The genetic manager allows the user to customize the size of a population for each generation, the mutation rate, and how crossover will function in each generation's population.
 
 ### Pooling Settings
 **Population Size:** How big do you want the population to be for each gen? </br>
