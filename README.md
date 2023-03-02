@@ -1,5 +1,5 @@
 # Self-Driving-Car
-[Image]https://github.com/luketwilson76/Self-Driving-Car/blob/main/Screenshot%202023-03-02%20103919.png
+<img src="Screenshot 2023-03-02 103919.png">
 *Figure 1: An ANN is being trained in a population*
 
 This is a self driving car that uses a gentic algorithm to progressivley train a population of ANNs towards a better fitness. 
