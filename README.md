@@ -1,6 +1,6 @@
 # Self-Driving-Car
 
-!
+! [Screenshot] 2023-03-02 103919.png
 *Figure 1: An ANN is being trained in a population*
 
 This is a self driving car that uses a gentic algorithm to progressivley train a population of ANNs towards a better fitness. 
